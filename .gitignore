@@ -1,3 +1,4 @@
-**/*.swp
-source/*.out
+.*.swp
+*.o
+*.out
 TicTacToe
