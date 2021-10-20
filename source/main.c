@@ -2,19 +2,12 @@
 #include <ncurses.h>
 #include <stdlib.h>
 
-typedef enum {
-	PLAYER_1 = 1,
-	PLAYER_2 = 2
-} Player;
+#include "win.h"
+#include "misc.h"
 
-typedef enum {
-	INVALID_INDEX,
-	USED_CELL
-} Error;
 
 void printBoard (char[3][3]);
 int getValidIndex (const char *, const char[3][3]);
-void handleError (Error);
 
 int main (int argc, char* argv[])
 {
@@ -41,18 +34,22 @@ int main (int argc, char* argv[])
 
 		currentPlayer = (currentPlayer % 2) ? 2 : 1;
 		mark = (currentPlayer == PLAYER_1) ? 'X' : 'O';
-		mvprintw (15, max_x / 2 - 15, "Player %d", currentPlayer);
+		mvprintw (MIN (max_y - 5, 8), max_x / 2 - 15, "Player %d", currentPlayer);
 		index = getValidIndex ("Enter the Index: ", board);
 
 		board[index / 3][index % 3 - 1] = mark;
 		currentPlayer;
-		//winState = checkWin ();
+		winState = checkWin (board, currentPlayer);
 	} while (winState == -1);
 
+	printBoard (board);
+	clrtobot ();
+	refresh ();
+	
 	if (winState == 0) {
-		printf ("It's a Draw!!\n");
+		mvprintw (MIN (max_y - 5, 8), max_x / 2 - 15, "It's a Draw!!\n");
 	} else {
-		printf ("Player %d won!\n", currentPlayer);
+		mvprintw (MIN (max_y - 5, 8), max_x / 2 - 15, "Player %d won!\n", currentPlayer);
 	}
 	getch ();
 	endwin ();
@@ -70,8 +67,8 @@ int getValidIndex (const char * prompt, const char board[3][3])
 	getmaxyx (stdscr, max_y, max_x);
 
 	while (1) {
-		mvprintw (17, max_x / 2 - 15, "%s", prompt);
-		move (18, max_x / 2 - 15);
+		mvprintw (MIN (max_y - 2, 12), max_x / 2 - 15, "%s", prompt);
+		move (MIN (max_y - 1, 13), max_x / 2 - 15);
 		clrtobot();
 		getnstr (buffer, 40);
 		index = atoi (buffer);
@@ -89,7 +86,7 @@ int getValidIndex (const char * prompt, const char board[3][3])
 
 void printBoard (char board[3][3])
 {
-	int current_y = 10;
+	int current_y = 3;
 	int current_x = getmaxx (stdscr) / 2 - 5;
 
 	for (int i = current_x; i < current_x + 8; i += 4) {
@@ -110,24 +107,3 @@ void printBoard (char board[3][3])
 	move (current_y + 6, current_x);	//move cursor to just after the board
 }
 
-void handleError (Error errorCode)
-{
-	int max_y, max_x;
-	int cur_x, cur_y;
-	getmaxyx (stdscr, max_y, max_x);
-	getyx (stdscr, cur_y, cur_x);
-
-	move (20, max_x / 2 - 15);
-	switch (errorCode) {
-		case INVALID_INDEX:
-			printw ("Invalid Index!");
-			break;
-		case USED_CELL:
-			printw ("Cell is Used!");
-			break;
-		default:
-			printw ("Unknown Error");
-			break;
-	}
-	move (cur_y, cur_x);
-}
