@@ -7,7 +7,7 @@ int checkWin (char board[3][3], Player currentPlayer)
 
 	if (checkRow (board, markToSearch)
 		|| checkCol (board, markToSearch)
-		/*|| checkDiag (board, markToSearch)*/) {
+		|| checkDiag (board, markToSearch)) {
 		return 1;
 	} /*else if (checkTie (board, markToSearch)) {
 		return 0;
