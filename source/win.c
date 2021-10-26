@@ -16,7 +16,7 @@ int checkWin (char board[3][3], Player currentPlayer)
 	}
 }
 
-static int checkRow (char board [3][3], char markToSearch)
+int checkRow (char board [3][3], char markToSearch)
 {
 	_Bool winState = 0;
 
@@ -33,7 +33,7 @@ static int checkRow (char board [3][3], char markToSearch)
 	return winState;
 }
 
-static int checkCol (char board[3][3], char markToSearch)
+int checkCol (char board[3][3], char markToSearch)
 {
 	_Bool winState = 0;
 
@@ -50,7 +50,7 @@ static int checkCol (char board[3][3], char markToSearch)
 	return winState;
 }
 
-static int checkDiag (char board[3][3], char markToSearch)
+int checkDiag (char board[3][3], char markToSearch)
 {
 	_Bool winState = 0;
 	int i = 0;
@@ -64,7 +64,7 @@ static int checkDiag (char board[3][3], char markToSearch)
 			}
 			winState = 1;
 		}
-		int i = 0;
+		i = 0;
 	}
 	return winState;
 }

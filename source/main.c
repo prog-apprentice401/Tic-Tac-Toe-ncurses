@@ -38,7 +38,6 @@ int main (int argc, char* argv[])
 		index = getValidIndex ("Enter the Index: ", board);
 
 		board[index / 3][index % 3 - 1] = mark;
-		currentPlayer;
 		winState = checkWin (board, currentPlayer);
 	} while (winState == -1);
 
