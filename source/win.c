@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include "misc.h"
 #include "win.h"
 
@@ -9,9 +10,9 @@ int checkWin (char board[3][3], Player currentPlayer)
 		|| checkCol (board, markToSearch)
 		|| checkDiag (board, markToSearch)) {
 		return 1;
-	} /*else if (checkTie (board, markToSearch)) {
+	} else if (checkTie (board)) {
 		return 0;
-	} */else {
+	} else {
 		return -1;
 	}
 }
@@ -67,4 +68,16 @@ int checkDiag (char board[3][3], char markToSearch)
 		i = 0;
 	}
 	return winState;
+}
+
+int checkTie (char board[3][3])
+{
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++) {
+			if (!isalpha (board[i][j])) {
+				return 0;	//there is an empty cell
+			}
+		}
+	}
+	return 1;	//all cells used
 }

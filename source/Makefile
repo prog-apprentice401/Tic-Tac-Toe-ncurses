@@ -1,15 +1,18 @@
 C_FLAGS=-Wall -lncurses
-all: main.o misc.o win.o
-	gcc main.o misc.o win.o $(C_FLAGS) -o TicTacToe.out
+all: main.o misc.o win.o colorPairs.o
+	gcc main.o misc.o win.o colorPairs.o $(C_FLAGS) -o TicTacToe.out
 
-main.o: main.c win.h misc.h
+main.o: main.c win.o misc.o colorPairs.o
 	gcc main.c -c $(C_FLAGS)
 
-misc.o: misc.c misc.h
+misc.o: misc.c misc.h colorPairs.o
 	gcc misc.c -c $(C_FLAGS)
 
-win.o: win.c win.h misc.h
+win.o: win.c win.h misc.o colorPairs.o
 	gcc win.c -c $(C_FLAGS)
+
+colorPairs.o: colorPairs.h colorPairs.c
+	gcc colorPairs.c -c $(C_FLAGS)
 
 clean:
 	rm *.o *.out

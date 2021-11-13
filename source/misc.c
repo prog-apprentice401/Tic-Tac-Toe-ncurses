@@ -1,5 +1,6 @@
 #include <ncurses.h>
 
+#include "colorPairs.h"
 #include "misc.h"
 
 void handleError (Error errorCode)
@@ -10,6 +11,7 @@ void handleError (Error errorCode)
 	getyx (stdscr, cur_y, cur_x);
 
 	move (MIN (max_y - 3, 10), max_x / 2 - 15);
+	attron (COLOR_PAIR (RED_ON_BLACK) | A_BOLD);
 	switch (errorCode) {
 		case INVALID_INDEX:
 			printw ("Invalid Index!");
