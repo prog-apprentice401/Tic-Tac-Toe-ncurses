@@ -8,7 +8,7 @@
 
 
 void printBoard (char[3][3]);
-int getValidIndex (const char *, const char[3][3]);
+int getValidIndex (const char[3][3]);
 
 int main (int argc, char* argv[])
 {
@@ -39,8 +39,8 @@ int main (int argc, char* argv[])
 		currentPlayer = (currentPlayer % 2) ? 2 : 1;
 		mark = (currentPlayer == PLAYER_1) ? 'X' : 'O';
 		attron (COLOR_PAIR (BLUE_ON_BLACK) | A_BOLD);
-		mvprintw (MIN (max_y - 5, 8), max_x / 2 - 15, "Player %d", currentPlayer);
-		index = getValidIndex ("Enter the Index: ", board);
+		mvprintw (max_y - 5, max_x / 2 - 15, "Player %d", currentPlayer);
+		index = getValidIndex (board);
 
 		board[index / 3][index % 3 - 1] = mark;
 		winState = checkWin (board, currentPlayer);
@@ -52,9 +52,9 @@ int main (int argc, char* argv[])
 	
 	attron (COLOR_PAIR (YELLOW_ON_BLACK) | A_BOLD);
 	if (winState == 0) {
-		mvprintw (MIN (max_y - 4, 8), max_x / 2 - 15, "It's a Draw!!\n");
+		mvprintw (max_y - 4, max_x / 2 - 15, "It's a Draw!!\n");
 	} else {
-		mvprintw (MIN (max_y - 4, 8), max_x / 2 - 15, "Player %d won!\n", currentPlayer);
+		mvprintw (max_y - 4, max_x / 2 - 15, "Player %d won!\n", currentPlayer);
 	}
 	standend ();
 	getch ();
@@ -63,7 +63,7 @@ int main (int argc, char* argv[])
 	return winState;
 }
 
-int getValidIndex (const char * prompt, const char board[3][3])
+int getValidIndex (const char board[3][3])
 {
 	int index;
 	int max_x;
@@ -74,8 +74,8 @@ int getValidIndex (const char * prompt, const char board[3][3])
 
 	while (1) {
 		attron (COLOR_PAIR (YELLOW_ON_BLACK));
-		mvprintw (MIN (max_y - 2, 12), max_x / 2 - 15, "%s", prompt);
-		move (MIN (max_y - 1, 13), max_x / 2 - 15);
+		mvprintw (max_y - 2, max_x / 2 - 15, "Enter the Index: ");
+		move (max_y - 1, max_x / 2 - 15);
 		clrtobot();
 		getnstr (buffer, 40);
 		index = atoi (buffer);
