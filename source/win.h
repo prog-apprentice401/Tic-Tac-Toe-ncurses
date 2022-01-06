@@ -3,9 +3,9 @@
 	
 	#include "misc.h"
 
-	int checkWin (char[3][3], Player);
-	int checkDiag (char[3][3], char);
-	int checkCol (char[3][3], char);
-	int checkRow (char[3][3], char);
-	int checkTie (char[3][3]);
+	int checkWin (char *, int, Player);
+	int checkDiag (char *, int, char);
+	int checkCol (char *, int, char);
+	int checkRow (char *, int, char);
+	int checkTie (char *, int);
 #endif

@@ -2,28 +2,27 @@
 #include "misc.h"
 #include "win.h"
 
-int checkWin (char board[3][3], Player currentPlayer)
+int checkWin (char * board, int sideLength, Player currentPlayer)
 {
 	char markToSearch = (currentPlayer == PLAYER_1) ? 'X' : 'O'; 
 
-	if (checkRow (board, markToSearch)
-		|| checkCol (board, markToSearch)
-		|| checkDiag (board, markToSearch)) {
+	if (checkRow (board, sideLength, markToSearch)
+		|| checkCol (board, sideLength, markToSearch)
+		|| checkDiag (board, sideLength, markToSearch)) {
 		return 1;
-	} else if (checkTie (board)) {
+	} else if (checkTie (board, sideLength)) {
 		return 0;
-	} else {
-		return -1;
 	}
+	return -1;
 }
 
-int checkRow (char board [3][3], char markToSearch)
+int checkRow (char * board, int sideLength, char markToSearch)
 {
 	_Bool winState = 0;
 
-	for (int i = 0; i < 3 && !winState; i++) {
-		for (int j = 0; j < 3; j++) {
-			if (board[i][j] != markToSearch) {
+	for (int i = 0; i < sideLength && !winState; i++) {
+		for (int j = 0; j < sideLength; j++) {
+			if (board[i * sideLength + j] != markToSearch) {
 				winState = 0;
 				break;
 			}
@@ -34,13 +33,13 @@ int checkRow (char board [3][3], char markToSearch)
 	return winState;
 }
 
-int checkCol (char board[3][3], char markToSearch)
+int checkCol (char * board, int sideLength, char markToSearch)
 {
 	_Bool winState = 0;
 
-	for (int i = 0; i < 3 && !winState; i++) {
-		for (int j = 0; j < 3; j++) {
-			if (board[j][i] != markToSearch) {
+	for (int i = 0; i < sideLength && !winState; i++) {
+		for (int j = 0; j < sideLength; j++) {
+			if (board[j * sideLength + i] != markToSearch) {
 				winState = 0;
 				break;
 			}
@@ -51,15 +50,15 @@ int checkCol (char board[3][3], char markToSearch)
 	return winState;
 }
 
-int checkDiag (char board[3][3], char markToSearch)
+int checkDiag (char * board, int sideLength, char markToSearch)
 {
 	_Bool winState = 0;
 	int i = 0;
 	int j = 0;
 
 	for (int diff = 1; diff >= -1 && !winState; diff -= 2) {
-		for (; i < 3  &&  j < 3 && j >= 0; i++, j += diff) {
-			if (board[i][j] != markToSearch) {
+		for (; i < sideLength  &&  j < sideLength && j >= 0; i++, j += diff) {
+			if (board[i * sideLength + j] != markToSearch) {
 				winState = 0;
 				break;
 			}
@@ -70,11 +69,11 @@ int checkDiag (char board[3][3], char markToSearch)
 	return winState;
 }
 
-int checkTie (char board[3][3])
+int checkTie (char * board, int sideLength)
 {
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 3; j++) {
-			if (!isalpha (board[i][j])) {
+	for (int i = 0; i < sideLength; i++) {
+		for (int j = 0; j < sideLength; j++) {
+			if (!isalpha (board[i * sideLength + j])) {
 				return 0;	//there is an empty cell
 			}
 		}

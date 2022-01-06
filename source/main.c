@@ -62,7 +62,7 @@ int main (int argc, char* argv[])
 		getValidIndex ((char *) board, sideLength, &enteredRow, &enteredCol);
 
 		board[enteredRow][enteredCol] = mark;
-		winState = checkWin (board, currentPlayer);
+		winState = checkWin ((char *) board, sideLength, currentPlayer);
 	} while (winState == -1);
 
 	printBoard ((char *) board, sideLength);
