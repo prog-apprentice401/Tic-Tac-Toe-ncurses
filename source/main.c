@@ -128,14 +128,14 @@ void printBoard (char *board, int sideLength)
 		mvaddch (current_y + 2 * i, current_x - 2, (i + '1') | A_DIM);
 		mvhline (current_y + 2 * i + 1, current_x - 1, ACS_HLINE, 4 * sideLength - 1);
 	}
+	//print cross characters on line intersections
+	for (int i = 0; i < sideLength - 1; i++) {
+		for (int j = 0; j < sideLength - 1; j++) {
+			mvaddch (current_y + 2 * i + 1, current_x + 4 * j + 2, ACS_PLUS | A_BOLD);
+		}
+	}
 	//print last remaining row index
 	mvaddch (current_y + 2 * sideLength - 2, current_x - 2, (sideLength + '0') | A_DIM);
-	/*
-	mvaddch (current_y + 1, current_x + 2, ACS_PLUS | A_BOLD);
-	mvaddch (current_y + 1, current_x + 6, ACS_PLUS | A_BOLD);
-	mvaddch (current_y + 3, current_x + 2, ACS_PLUS | A_BOLD);
-	mvaddch (current_y + 3, current_x + 6, ACS_PLUS | A_BOLD);
-	*/
 
 	//printing actual values
 	for (int i = 0; i < sideLength; i++) {
