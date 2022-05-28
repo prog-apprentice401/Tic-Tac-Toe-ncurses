@@ -10,7 +10,7 @@ void handleError (Error errorCode)
 	getmaxyx (stdscr, max_y, max_x);
 	getyx (stdscr, cur_y, cur_x);
 
-	move (max_y - 4, max_x / 2 - 15);
+	move (max_y - 5, max_x / 2 - 15);
 	attron (COLOR_PAIR (RED_ON_BLACK) | A_BOLD);
 	switch (errorCode) {
 		case INVALID_INDEX:
