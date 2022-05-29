@@ -14,7 +14,7 @@ void getValidIndex (const char *, int, int *, int *);
 int main (int argc, char* argv[])
 {
 	if (argc != 2) {
-		fputs ("Usage: tictactoe <sideLength>\n", stderr);
+		fputs ("Usage: tic-tac-toe <sideLength>\n", stderr);
 		return 1;
 	}
 	int sideLength = atoi (argv[1]);
@@ -88,7 +88,7 @@ void getValidIndex (const char* board, int sideLength, int *enteredRow, int * en
 {
 	int max_x;
 	int max_y;
-	char buffer[6];
+	char buffer[11];
 
 	getmaxyx (stdscr, max_y, max_x);
 
@@ -96,10 +96,10 @@ void getValidIndex (const char* board, int sideLength, int *enteredRow, int * en
 		attron (COLOR_PAIR (YELLOW_ON_BLACK));
 		mvprintw (max_y - 3, max_x / 2 - 2 * sideLength, "Enter the Index: ");
 		move (max_y - 2, max_x / 2 - 2 * sideLength);
-		getnstr (buffer, 5);
+		getnstr (buffer, 10);
 
 		//the user wants to exit
-		if (strstr ("^Q", buffer) == 0) {
+		if (strstr (buffer, "quit")) {
 			exit (0);
 		}
 
@@ -111,6 +111,7 @@ void getValidIndex (const char* board, int sideLength, int *enteredRow, int * en
 		if (*enteredRow < 0 || *enteredRow >= sideLength
 		    || *enteredCol < 0 || *enteredCol >= sideLength) {
 			handleError (INVALID_INDEX);
+			mvhline (max_y - 2, max_x / 2 - 2 * sideLength, ' ', max_x / 2);
 		} else if (!isspace (board[*enteredRow * sideLength + *enteredCol])) {
 			handleError (USED_CELL);
 		} else {
