@@ -1,6 +1,6 @@
 C_FLAGS=-Wall -lncurses
 all: main.o misc.o win.o colorPairs.o
-	gcc main.o misc.o win.o colorPairs.o $(C_FLAGS) -o TicTacToe.out
+	gcc main.o misc.o win.o colorPairs.o $(C_FLAGS) -o tictactoe.out
 
 main.o: main.c win.o misc.o colorPairs.o
 	gcc main.c -c $(C_FLAGS)
